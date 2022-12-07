@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell } = require("electron");
+const { app, BrowserWindow, Menu, shell, ipcMain } = require("electron");
 const path = require("path");
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -43,7 +43,13 @@ const menuItems = [
             width: 500,
             height: 500,
             show: false,
+            webPreferences: {
+              preload: path.join(__dirname, "cameraPreload.js"),
+            },
           });
+
+          win2.webContents.on("close-record-win", () => win2.close());
+
           win2.webContents.openDevTools();
           win2.loadFile("recordMe.html");
           win2.once("ready-to-show", () => win2.show());
@@ -65,6 +71,10 @@ const createWindow = () => {
     },
   });
   if (isDev) win.webContents.openDevTools();
+
+  ipcMain.on("set-image", (event, data) => {
+    win.webContents.send("get-image", data);
+  });
   win.loadFile("index.html");
 };
 
