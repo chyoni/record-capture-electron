@@ -44,14 +44,13 @@ const menuItems = [
             height: 500,
             show: false,
             webPreferences: {
-              preload: path.join(__dirname, "cameraPreload.js"),
+              preload: path.join(__dirname, "src/camera/cameraPreload.js"),
             },
           });
 
-          win2.webContents.on("close-record-win", () => win2.close());
-
+          ipcMain.on("close-record-win", () => win2.close());
           win2.webContents.openDevTools();
-          win2.loadFile("recordMe.html");
+          win2.loadFile("src/camera/camera.html");
           win2.once("ready-to-show", () => win2.show());
         },
       },
@@ -67,7 +66,7 @@ const createWindow = () => {
     width: 1000,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "src/main/preload.js"),
     },
   });
   if (isDev) win.webContents.openDevTools();
@@ -75,7 +74,7 @@ const createWindow = () => {
   ipcMain.on("set-image", (event, data) => {
     win.webContents.send("get-image", data);
   });
-  win.loadFile("index.html");
+  win.loadFile("src/main/index.html");
 };
 
 app.whenReady().then(() => {

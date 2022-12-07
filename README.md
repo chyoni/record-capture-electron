@@ -21,3 +21,4 @@
 - main이 아닌 곳은 전부 renderer라고 보면 되나 ? 아직 너무 헷갈림 
 ```
 
+### #06 Refactoring directory structure
