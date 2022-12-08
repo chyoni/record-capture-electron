@@ -22,3 +22,5 @@
 ```
 
 ### #06 Refactoring directory structure
+
+### #07 Bug fix: close -> destroy

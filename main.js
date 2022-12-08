@@ -48,7 +48,7 @@ const menuItems = [
             },
           });
 
-          ipcMain.on("close-record-win", () => win2.close());
+          ipcMain.on("close-record-win", () => win2.destroy());
           win2.webContents.openDevTools();
           win2.loadFile("src/camera/camera.html");
           win2.once("ready-to-show", () => win2.show());
